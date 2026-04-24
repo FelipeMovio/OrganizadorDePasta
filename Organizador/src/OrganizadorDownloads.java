@@ -78,6 +78,6 @@ public class OrganizadorDownloads {
 
         Files.move(arquivo, novoCaminho, StandardCopyOption.REPLACE_EXISTING);
 
-        System.out.println("📦 Movido: " + arquivo.getFileName() + " → " + destino);
+        System.out.println(" Movido: " + arquivo.getFileName() + " → " + destino);
     }
 }
