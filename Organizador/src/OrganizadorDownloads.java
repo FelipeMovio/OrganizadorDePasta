@@ -1,25 +1,22 @@
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.concurrent.*;
 
 public class OrganizadorDownloads {
 
     private static final String DOWNLOADS =
-            System.getProperty("user.home") + "\\Downloads";
+            System.getProperty("user.home") + "/Downloads";
 
     public static void main(String[] args) {
 
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
         System.out.println(" Organizador iniciado...");
 
-        scheduler.scheduleAtFixedRate(() -> {
-            try {
-                organizar();
-            } catch (Exception e) {
-                System.err.println("Erro ao organizar: " + e.getMessage());
-            }
-        }, 0, 10, TimeUnit.MINUTES);
+        try {
+            organizar();
+        } catch (Exception e) {
+            System.err.println("Erro ao organizar: " + e.getMessage());
+        }
+
+        System.out.println("✔ Finalizado.");
     }
 
     public static void organizar() throws IOException {
@@ -39,7 +36,7 @@ public class OrganizadorDownloads {
             }
         });
 
-        System.out.println("✔ Organização concluída em: " + java.time.LocalTime.now());
+        System.out.println("✔ Organização concluída!");
     }
 
     private static void organizarArquivo(Path arquivo, Path base) throws IOException {
@@ -74,7 +71,6 @@ public class OrganizadorDownloads {
 
         Path novoCaminho = pastaDestino.resolve(arquivo.getFileName());
 
-        // 🔥 Evita sobrescrever arquivos
         if (Files.exists(novoCaminho)) {
             String novoNome = System.currentTimeMillis() + "_" + arquivo.getFileName();
             novoCaminho = pastaDestino.resolve(novoNome);
@@ -82,7 +78,6 @@ public class OrganizadorDownloads {
 
         Files.move(arquivo, novoCaminho, StandardCopyOption.REPLACE_EXISTING);
 
-        // 🔥 Log
         System.out.println("📦 Movido: " + arquivo.getFileName() + " → " + destino);
     }
 }
