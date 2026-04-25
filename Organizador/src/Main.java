@@ -7,10 +7,11 @@ public class Main {
 
         System.out.println(" Organizador iniciado...");
 
-        try {
-            OrganizadorService service = new OrganizadorService();
-            WatcherService watcher = new WatcherService(service);
+        OrganizadorService service = new OrganizadorService();
+        WatcherService watcher = new WatcherService(service);
 
+        try {
+            service.organizarDownloads();
             watcher.iniciar();
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());

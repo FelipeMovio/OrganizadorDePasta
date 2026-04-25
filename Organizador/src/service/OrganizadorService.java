@@ -54,7 +54,7 @@ public class OrganizadorService {
 
         Files.move(arquivo, novoCaminho, StandardCopyOption.REPLACE_EXISTING);
 
-        System.out.println("📦 Movido: " + arquivo.getFileName() + " → " + destino);
+        System.out.println(" Movido: " + arquivo.getFileName() + " → " + destino);
     }
 
     public void organizarArquivoUnico(Path arquivo) throws IOException {
@@ -80,6 +80,6 @@ public class OrganizadorService {
 
         Files.move(arquivo, novoCaminho, StandardCopyOption.REPLACE_EXISTING);
 
-        System.out.println("📦 Movido automaticamente: " + arquivo.getFileName());
+        System.out.println(" Movido automaticamente: " + arquivo.getFileName());
     }
 }
