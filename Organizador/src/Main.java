@@ -1,4 +1,5 @@
 import service.OrganizadorService;
+import service.WatcherService;
 
 public class Main {
 
@@ -6,10 +7,11 @@ public class Main {
 
         System.out.println(" Organizador iniciado...");
 
-        OrganizadorService service = new OrganizadorService();
-
         try {
-            service.organizarDownloads();
+            OrganizadorService service = new OrganizadorService();
+            WatcherService watcher = new WatcherService(service);
+
+            watcher.iniciar();
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());
         }
