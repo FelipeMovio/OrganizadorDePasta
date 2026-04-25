@@ -14,6 +14,6 @@ public class Main {
             System.err.println("Erro: " + e.getMessage());
         }
 
-        System.out.println("✔ Finalizado.");
+        System.out.println(" Finalizado.");
     }
 }
