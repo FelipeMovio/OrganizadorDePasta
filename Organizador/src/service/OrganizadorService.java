@@ -31,7 +31,7 @@ public class OrganizadorService {
         System.out.println("✔ Organização concluída!");
     }
 
-    private void organizarArquivo(Path arquivo, Path base) throws IOException {
+    public void organizarArquivo(Path arquivo, Path base) throws IOException {
 
         if (Files.isDirectory(arquivo)) return;
 
@@ -55,5 +55,31 @@ public class OrganizadorService {
         Files.move(arquivo, novoCaminho, StandardCopyOption.REPLACE_EXISTING);
 
         System.out.println("📦 Movido: " + arquivo.getFileName() + " → " + destino);
+    }
+
+    public void organizarArquivoUnico(Path arquivo) throws IOException {
+
+        if (!Files.exists(arquivo) || Files.isDirectory(arquivo)) return;
+
+        String nome = arquivo.getFileName().toString();
+
+        String destino = TipoArquivoUtil.definirTipo(nome);
+
+        Path pastaDestino = arquivo.getParent().resolve(destino);
+
+        if (!Files.exists(pastaDestino)) {
+            Files.createDirectory(pastaDestino);
+        }
+
+        Path novoCaminho = pastaDestino.resolve(arquivo.getFileName());
+
+        if (Files.exists(novoCaminho)) {
+            String novoNome = System.currentTimeMillis() + "_" + arquivo.getFileName();
+            novoCaminho = pastaDestino.resolve(novoNome);
+        }
+
+        Files.move(arquivo, novoCaminho, StandardCopyOption.REPLACE_EXISTING);
+
+        System.out.println("📦 Movido automaticamente: " + arquivo.getFileName());
     }
 }
