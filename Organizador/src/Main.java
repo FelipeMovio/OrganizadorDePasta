@@ -12,6 +12,7 @@ public class Main {
 
         try {
             service.organizarDownloads();
+            Thread.sleep(2000);
             watcher.iniciar();
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());

@@ -29,12 +29,16 @@ public class WatcherService {
 
             for (WatchEvent<?> event : key.pollEvents()) {
 
+                if (event.kind() != ENTRY_CREATE) continue;
+
                 Path arquivo = pastaDownloads.resolve((Path) event.context());
+
+                if (Files.isDirectory(arquivo)) continue;
 
                 System.out.println("Novo arquivo: " + arquivo.getFileName());
 
                 try {
-                    Thread.sleep(1500); // espera terminar download
+                    esperarArquivoCompleto(arquivo);
                     organizadorService.organizarArquivoUnico(arquivo);
                 } catch (Exception e) {
                     System.err.println("Erro ao processar arquivo");
@@ -42,6 +46,27 @@ public class WatcherService {
             }
 
             key.reset();
+        }
+    }
+
+    private void esperarArquivoCompleto(Path arquivo) throws InterruptedException {
+
+        long tamanhoAnterior = -1;
+
+        while (true) {
+            try {
+                long tamanhoAtual = Files.size(arquivo);
+
+                if (tamanhoAtual == tamanhoAnterior) {
+                    break;
+                }
+
+                tamanhoAnterior = tamanhoAtual;
+                Thread.sleep(1000);
+
+            } catch (Exception e) {
+                break;
+            }
         }
     }
 }
